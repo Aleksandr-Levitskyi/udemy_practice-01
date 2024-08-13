@@ -1,7 +1,17 @@
 "use strick";
 
 // let numberOfFilms = prompt("Сколько фильмов вы уже посмотрели?", "");
-const numberOfFilms = +prompt("Сколько фильмов вы посмотрели?", ""); // нужно было использовать CONST
+let numberOfFilms; // нужно было использовать CONST
+
+function start() {
+  numberOfFilms = +prompt("Сколько фильмов вы посмотрели?", "");
+
+  while (numberOfFilms == "" || numberOfFilms == null || isNaN(numberOfFilms)) {
+    numberOfFilms = +prompt("Сколько фильмов вы посмотрели?", "");
+  }
+}
+
+// start();
 
 const personalMovieDB = {
   count: numberOfFilms,
@@ -11,59 +21,43 @@ const personalMovieDB = {
   privat: false,
 };
 
-for (i = 0; i <= 2; i++) {
-  let a = prompt("Ваш последний фильм?", "");
-  //лучше использовать тиехнические имена типа 'a', вместо имен типа 'movieTitle'
-
-  //если пользователь в окне prompt нажимает отмена, то в переменную записывается null
-  //проверка на null => a != null
-
-  //мой вариант
-
-  //   if (a === "" || a.length > 50 || null) {
-  //     a = prompt("Ваш последний фильм?", "");
-  //   } else {
-  //     let b = prompt("На сколько вы его оцените?", "");
-  //     personalMovieDB.movies[a] = b;
-  //   }
-  // }
-
-  // вариант с курса
-  if (a != null && a != "" && a.length < 50) {
-    let b = prompt("На сколько вы его оцените?", "");
-    personalMovieDB.movies[a] = b;
-  } else {
-    i--;
+function rememberMyFilms() {
+  for (i = 0; i <= 2; i++) {
+    let a = prompt("Ваш последний фильм?", "");
+    if (a != null && a != "" && a.length < 50) {
+      let b = prompt("На сколько вы его оцените?", "");
+      personalMovieDB.movies[a] = b;
+    } else {
+      i--;
+    }
   }
 }
 
-if (personalMovieDB.count < 10) {
-  alert("Просмотрено мало фильмов");
-} else if (personalMovieDB.count > 10 && personalMovieDB.count < 30) {
-  alert("Вы киноман!");
-} else {
-  alert("Произошла ошибка");
+// rememberMyFilms();
+
+function detectPersonalLevel() {
+  if (personalMovieDB.count < 10) {
+    alert("Просмотрено мало фильмов");
+  } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+    alert("Вы киноман!");
+  } else {
+    alert("Произошла ошибка");
+  }
 }
 
-console.log(personalMovieDB);
+// detectPersonalLevel();
 
-// let movieTitle = prompt("ОДин из последних фильмов?", "");
-// let movieRate = prompt("На сколько его оцените?", "");
+function showMyDB(hidden) {
+  if (!hidden) console.log(personalMovieDB);
+}
 
-// // лучше создавать однотипные переменные через запятую
-// let a = prompt("Your the last movie?", ""),
-//   b = prompt("Rate the movie", ""),
-//   c = prompt("Your the last movie?", ""),
-//   d = prompt("Rate the movie", "");
+showMyDB(personalMovieDB["privat"]);
 
-// // personalMovieDB.movies[movieTitle] = movieRate;
-// personalMovieDB.movies[a] = b;
-// personalMovieDB.movies[c] = d;
+function writeYourGenres(genres) {
+  for (let i = 1; i <= 3; i++) {
+    //при работе с пользователем работать с !
+    genres[i - 1] = prompt(`Ваш любымый жанр под номером ${i}`);
+  }
+}
 
-// const num = "coon00";
-
-// if (num === "" || num.length > 6) {
-//   console.log("error");
-// } else {
-//   console.log("congratulation");
-// }
+writeYourGenres(personalMovieDB["genres"]);
